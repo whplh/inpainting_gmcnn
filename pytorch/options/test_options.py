@@ -28,6 +28,7 @@ class TestOptions:
         self.parser.add_argument('--test_num', type=int, default=-1)
         self.parser.add_argument('--mode', type=str, default='save')
         self.parser.add_argument('--phase', type=str, default='test')
+        self.parser.add_argument('--mask_path', type=str, default='')
 
         # for generator
         self.parser.add_argument('--g_cnum', type=int, default=32,

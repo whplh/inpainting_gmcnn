@@ -5,7 +5,7 @@ import subprocess
 import glob
 from options.test_options import TestOptions
 from model.net import InpaintingModel_GMCNN
-from util.utils import generate_rect_mask, generate_stroke_mask, getLatest
+from util.utils import generate_rect_mask, generate_stroke_mask, getLatest, get_file_mask
 
 os.environ['CUDA_VISIBLE_DEVICES']=str(np.argmax([int(x.split()[2]) for x in subprocess.Popen(
         "nvidia-smi -q -d Memory | grep -A4 GPU | grep Free", shell=True, stdout=subprocess.PIPE).stdout.readlines()]
@@ -36,7 +36,9 @@ if config.random_mask:
     np.random.seed(config.seed)
 
 for i in range(test_num):
-    if config.mask_type == 'rect':
+    if config.mask_path:
+        mask=get_file_mask(config.mask_path)    
+    elif config.mask_type == 'rect':
         mask, _ = generate_rect_mask(config.img_shapes, config.mask_shapes, config.random_mask)
     else:
         mask = generate_stroke_mask(im_size=(config.img_shapes[0], config.img_shapes[1]),

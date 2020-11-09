@@ -82,3 +82,10 @@ def getLatest(folder_path):
     files = glob.glob(folder_path)
     file_times = list(map(lambda x: time.ctime(os.path.getctime(x)), files))
     return files[sorted(range(len(file_times)), key=lambda x: file_times[x])[-1]]
+
+def get_file_mask(filepath):
+    mask = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
+    mask = np.minimum(mask, 1.0)
+    mask=np.expand_dims(mask, axis=0)
+    mask=np.expand_dims(mask, axis=0)
+    return mask
